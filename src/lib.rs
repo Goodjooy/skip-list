@@ -1,34 +1,25 @@
-mod list;
-
-mod node;
-
-pub use list::SkipList;
+mod internal_node;
+mod leaf_node;
+pub mod skip_list;
+mod skip_node;
 
 #[cfg(test)]
 mod test {
-    use crate::SkipList;
+    use rand::Rng;
 
     #[test]
-    fn test1() {
-        let mut skip_list = SkipList::new();
+    fn test2() {
+        use crate::skip_list::SkipLinkedList;
+        use rand;
+        let mut list = SkipLinkedList::new();
+        let mut rand = rand::thread_rng();
+        for _ in 0..10000 {
+            list.insert(rand.gen_range(i32::MIN..=i32::MAX))
+        }
 
-        skip_list.insert(9);
-        skip_list.insert(3);
-        skip_list.insert(1i32);
-        skip_list.insert(2);
-        skip_list.insert(-1);
-        skip_list.insert(14i32);
-        skip_list.insert(211);
-        skip_list.insert(-132);
-        println!(
-            "len {}, hight {}, w {}",
-            skip_list.len(),
-            skip_list.hight(),
-            skip_list.top_len()
-        );
-
-        for i in skip_list.iter() {
+        for i in list.iter() {
             println!("now is {i}")
         }
+        println!("height {}, len {}", list.height(), list.len());
     }
 }
